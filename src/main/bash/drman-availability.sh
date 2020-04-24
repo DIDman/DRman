@@ -87,7 +87,7 @@ function __drman_update_broadcast() {
 
 		echo "$broadcast_live_id" | tee "$broadcast_id_file" > /dev/null
 
-		BROADCAST_LIVE_TEXT=$(__drman_secure_curl "${DRMAN_CANDIDATES_API}/broadcast/latest")
+		BROADCAST_LIVE_TEXT=$(__drman_secure_curl "${DRMAN_CANDIDATES_API}/broadcast/latest/txt")
 		echo "$BROADCAST_LIVE_TEXT" | tee "$broadcast_text_file" > /dev/null
 		if [[ "$COMMAND" != "broadcast" ]]; then
 			__drman_echo_cyan "$BROADCAST_LIVE_TEXT"
