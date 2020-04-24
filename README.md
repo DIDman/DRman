@@ -15,7 +15,7 @@ Hyperledger Wiki link. https://wiki.hyperledger.org/pages/viewpage.action?pageId
 
 Open your favourite terminal and enter the following:
 
-    $ curl -s https://raw.githubusercontent.com/DIDman/DRman/dist/dist/drman-latest.zip | bash
+    $ curl -s https://raw.githubusercontent.com/DIDman/DRman/dist/dist/get.drman.io | bash
 
 If the environment needs tweaking for DRMAN to be installed, the installer will prompt you accordingly and ask you to restart.
 
