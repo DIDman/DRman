@@ -1,4 +1,4 @@
-# DIDregman
+# DRman
 DID Registry Manager
 
 A tool to set up a DID registry for an organization on GitHub.

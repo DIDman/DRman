@@ -16,9 +16,11 @@
 #
 
 #Install: stable
-
+DRMAN_DIST_BRANCH=${DRMAN_DIST_BRANCH:-dist}
+DRMAN_NAMESPACE=${DRMAN_NAMESPACE:-DIDman}
 # Global variables
-DRMAN_SERVICE="https://raw.githubusercontent.com"
+DRMAN_SERVICE="https://raw.githubusercontent.com/${DRMAN_NAMESPACE}/DRman/${DRMAN_DIST_BRANCH}"
+
 DRMAN_VERSION="0.0.1+1"
 DRMAN_PLATFORM=$(uname)
 
@@ -195,7 +197,10 @@ echo "drman_debug_mode=false" >> "$drman_config_file"
 echo "drman_colour_enable=true" >> "$drman_config_file"
 
 echo "Download script archive..."
-curl --location --progress-bar "${DRMAN_SERVICE}/broker/download/drman/install/${DRMAN_VERSION}/${DRMAN_PLATFORM}" > "$drman_zip_file"
+
+# TODO
+# curl --location --progress-bar "${DRMAN_SERVICE}/dist/install/${DRMAN_VERSION}/${DRMAN_PLATFORM}" > "$drman_zip_file"
+curl --location --progress-bar "${DRMAN_SERVICE}/dist/drman-latest.zip" > "$drman_zip_file"
 
 ARCHIVE_OK=$(unzip -qt "$drman_zip_file" | grep 'No errors detected in compressed data')
 if [[ -z "$ARCHIVE_OK" ]]; then
