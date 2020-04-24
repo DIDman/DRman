@@ -1,10 +1,13 @@
 # DRman
-DID Registry Manager
+Candidates Branch
 
-A tool to set up a DID registry for an organization on GitHub.
+# DR Repo available 
 
-# Getting Started.
+DummyRepoA-0.0.1
+DummyRepoA-0.0.2
+DummyRepoA-0.0.3
+DummyRepoB-0.0.1
+DummyRepoC-0.0.2
+DummyRepoD-0.0.3
 
-Hyperledger Wiki link. https://wiki.hyperledger.org/pages/viewpage.action?pageId=31195277
- 
-Read up on DID(https://www.w3.org/TR/did-core/) and what a DID registry is. 
+
