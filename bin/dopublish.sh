@@ -38,8 +38,8 @@ git add /dist/drman-REL-${VERSION}.zip
 git commit - m "Published REL-${VERSION}"
 git push origin dist
 
-#back to master branch
-git checkout master
+#back to dist branch
+git checkout dist
 
 
 

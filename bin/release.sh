@@ -47,6 +47,6 @@ git push -f origin "$BRANCH:$BRANCH"
 git tag "$VERSION"
 git push origin "$VERSION"
 
-#back to master branch
-git checkout master
+#back to dist branch
+git checkout dist
 
