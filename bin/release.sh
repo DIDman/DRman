@@ -16,7 +16,7 @@ git checkout dist
 cp dist/tmpl/get.drman.io.tmpl dist/get.drman.io
 
 #update version on dist branch
-for file in "dist/get.didregman.io" "mkdocs.yml"; do
+for file in "dist/get.drman.io" "mkdocs.yml"; do
 	sed -i "s/@DRM_VERSION@/$VERSION/g" "$file"
 	git add "$file"
 done
@@ -31,8 +31,6 @@ git checkout master
 git branch -D "$BRANCH"
 git checkout -b "$BRANCH"
 
-# move get.drman.io.tmpl to dist
-cp dist/tmpl/get.drman.io.tmpl dist/get.drman.io
 
 #update version on release branch
 for file in ".travis.yml"; do
