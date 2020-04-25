@@ -16,7 +16,7 @@
 #   limitations under the License.
 #
 
-function sdk() {
+function drm() {
 
 	COMMAND="$1"
 	QUALIFIER="$2"
