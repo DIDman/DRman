@@ -30,7 +30,7 @@ cp tmp/drman-latest.zip tmp/drman-${VERSION}.zip
 # Prepare dist branch
 # checkout dist branch
 
-git checkout -b "dist"
+git checkout "dist"
 
 # move get.drman.io.tmpl to dist
 cp dist/tmpl/get.drman.io.tmpl dist/get.drman.io
