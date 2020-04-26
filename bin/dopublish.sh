@@ -10,8 +10,10 @@ if [[ -z "$VERSION" ]]; then
 fi
 
 #checkout release branch
-git checkout -b "$BRANCH"
-
+#git checkout -b "$BRANCH"
+#git checkout tags/<tag> -b <branch>
+echo git checkout tags/"$VERSION" -b "$BRANCH"
+git checkout tags/"$VERSION" -b "$BRANCH"
 #prepare scripts
 mkdir -p build/scripts
 
