@@ -16,7 +16,7 @@ git branch -D "$BRANCH"
 git checkout -b "$BRANCH"
 
 
-update version on release branch
+# update version on release branch
 for file in ".travis.yml"; do
 	echo sed -i "s/@DRM_VERSION@/$VERSION/g" "$file"
 	echo git add "$file"
@@ -31,6 +31,6 @@ git push -f origin "$BRANCH:$BRANCH"
 git tag "$VERSION"
 git push origin "$VERSION"
 
-#back to dist branch
-git checkout dist
+#back to master branch
+git checkout master
 
