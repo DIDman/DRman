@@ -1,3 +1,5 @@
 /build
 /tmp
 .gradle
+tmp
+build

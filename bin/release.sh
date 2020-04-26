@@ -9,22 +9,6 @@ if [[ -z "$VERSION" ]]; then
 	exit 0
 fi
 
-#prepare dist branch
-git checkout dist
-
-# move get.drman.io.tmpl to dist
-cp dist/tmpl/get.drman.io.tmpl dist/get.drman.io
-
-#update version on dist branch
-for file in "dist/get.drman.io" "mkdocs.yml"; do
-	sed -i "s/@DRM_VERSION@/$VERSION/g" "$file"
-	git add "$file"
-done
-
-git commit -m "Update version of dist to $VERSION"
-
-#push dist branch
-git push -f origin dist
 
 #prepare master branch
 git checkout master
@@ -32,10 +16,10 @@ git branch -D "$BRANCH"
 git checkout -b "$BRANCH"
 
 
-#update version on release branch
+update version on release branch
 for file in ".travis.yml"; do
-	sed -i "s/@DRM_VERSION@/$VERSION/g" "$file"
-	git add "$file"
+	echo sed -i "s/@DRM_VERSION@/$VERSION/g" "$file"
+	echo git add "$file"
 done
 
 git commit -m "Update version of $BRANCH to $VERSION"
