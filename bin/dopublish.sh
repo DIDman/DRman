@@ -50,8 +50,8 @@ cp tmp/drman-${VERSION}.zip dist/drman-${VERSION}.zip
 cp tmp/drman-latest.zip dist/drman-latest.zip
 
 git add dist/drman-latest.zip
-git add dist/drman-${VERSION}.zip
-git commit - m "Published ${VERSION}"
+git add dist/drman-$VERSION.zip
+git commit -m "Published $VERSION"
 git push origin dist
 
 #back to dist branch
