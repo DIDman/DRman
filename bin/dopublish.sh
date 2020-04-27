@@ -23,7 +23,7 @@ cp src/main/bash/*.sh build/scripts
 
 # make drman-latest.zip 
 mkdir -p tmp
-zip -r tmp/drman-latest.zip build/scripts
+zip -rj tmp/drman-latest.zip build/scripts/*.sh
 mkdir -p build/distribution
 cp tmp/drman-latest.zip tmp/drman-${VERSION}.zip
 
