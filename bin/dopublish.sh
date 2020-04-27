@@ -1,18 +1,20 @@
 #!/bin/bash
 
-VERSION="$1"
-BRANCH="RELEASE"
+version="$1"
+branch="RELEASE"
+drman_namespace="${DRMAN_NAMESPACE:-DIDman}"
+drman_candidate_branch="${DRMAN_CANDIDATE_BRANCH:-candidates}"
+drman_candidate_repo_version="${DRMAN_CANDIDATE_REPO_VERSION:-1}"
 
 #sanity
-if [[ -z "$VERSION" ]]; then
+if [[ -z "$version" ]]; then
 	echo "Usage: dopublish.sh <version>"
 	exit 0
 fi
 
 #checkout release branch
-git checkout "$BRANCH"
-#git checkout tags/<tag> -b <branch>
-#echo git checkout tags/"$VERSION" -b "$BRANCH"
+git checkout "$branch"
+
 #prepare scripts
 mkdir -p build/scripts
 
@@ -21,11 +23,22 @@ mkdir -p build/scripts
 
 cp src/main/bash/*.sh build/scripts
 
+
+#update version,namespace and candidate branch in scripts
+for file in "build/scripts/drman-init.sh" ; do
+	#echo sed -i "s/@DRMAN_VERSION@/$VERSION/g" "$file"
+	sed -i "s/@DRMAN_VERSION@/$version/g" "$file"
+	sed -i "s/@DRMAN_NAMESPACE@/$drman_namespace/g" "$file"
+	sed -i "s/@DRMAN_CANDIDATE_BRANCH@/$drman_candidate_branch/g" "$file"
+	sed -i "s/@DRMAN_CANDIDATE_REPO_VERSION@/$drman_candidate_repo_version/g" "$file"
+	git add "$file"
+done
+
 # make drman-latest.zip 
 mkdir -p tmp
 zip -rj tmp/drman-latest.zip build/scripts/*.sh
 mkdir -p build/distribution
-cp tmp/drman-latest.zip tmp/drman-${VERSION}.zip
+cp tmp/drman-latest.zip tmp/drman-${version}.zip
 
 # Prepare dist branch
 # checkout dist branch
@@ -38,7 +51,7 @@ cp dist/tmpl/get.drman.io.tmpl dist/get.drman.io
 #update version on dist branch
 for file in "dist/get.drman.io"; do
 	#echo sed -i "s/@DRMAN_VERSION@/$VERSION/g" "$file"
-	sed -i "s/@DRMAN_VERSION@/$VERSION/g" "$file"
+	sed -i "s/@DRMAN_VERSION@/$version/g" "$file"
 	git add "$file"
 done
 
@@ -46,12 +59,12 @@ done
 
 
 # drman-latest.zip to dist branch
-cp tmp/drman-${VERSION}.zip dist/drman-${VERSION}.zip
+cp tmp/drman-${version}.zip dist/drman-${version}.zip
 cp tmp/drman-latest.zip dist/drman-latest.zip
 
 git add dist/drman-latest.zip
-git add dist/drman-$VERSION.zip
-git commit -m "Published $VERSION"
+git add dist/drman-$version.zip
+git commit -m "Published $version"
 git push origin dist
 
 #back to dist branch

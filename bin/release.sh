@@ -1,10 +1,10 @@
 #!/bin/bash
 
-VERSION="$1"
-BRANCH="RELEASE"
+version="$1"
+branch="RELEASE"
 
 #sanity
-if [[ -z "$VERSION" ]]; then
+if [[ -z "$version" ]]; then
 	echo "Usage: release.sh <version>"
 	exit 0
 fi
@@ -12,24 +12,24 @@ fi
 
 #prepare master branch
 git checkout master
-git branch -D "$BRANCH"
-git checkout -b "$BRANCH"
+git branch -D "$branch"
+git checkout -b "$branch"
 
 
 # update version on release branch
 for file in ".travis.yml"; do
-	echo sed -i "s/@DRMAN_VERSION@/$VERSION/g" "$file"
+	echo sed -i "s/@DRMAN_VERSION@/$version/g" "$file"
 	echo git add "$file"
 done
 
-git commit -m "Update version of $BRANCH to $VERSION"
+git commit -m "Update version of $branch to $version"
 
 #push release branch
-git push -f origin "$BRANCH:$BRANCH"
+git push -f origin "$branch:$branch"
 
 #push tag
-git tag "$VERSION"
-git push origin "$VERSION"
+git tag "$version"
+git push origin "$version"
 
 #back to master branch
 git checkout master
