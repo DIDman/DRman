@@ -21,7 +21,7 @@ DRMAN_NAMESPACE=${DRMAN_NAMESPACE:-DIDman}
 # Global variables
 DRMAN_SERVICE="https://raw.githubusercontent.com/${DRMAN_NAMESPACE}/DRman/${DRMAN_DIST_BRANCH}"
 
-DRMAN_VERSION="0.0.1-a1"
+DRMAN_VERSION="0.0.1-a2"
 DRMAN_PLATFORM=$(uname)
 
 if [ -z "$DRMAN_DIR" ]; then
@@ -200,6 +200,7 @@ echo "Download script archive..."
 
 # TODO
 # curl --location --progress-bar "${DRMAN_SERVICE}/dist/install/${DRMAN_VERSION}/${DRMAN_PLATFORM}" > "$drman_zip_file"
+echo curl --location --progress-bar "${DRMAN_SERVICE}/dist/drman-latest.zip" > "$drman_zip_file"
 curl --location --progress-bar "${DRMAN_SERVICE}/dist/drman-latest.zip" > "$drman_zip_file"
 
 ARCHIVE_OK=$(unzip -qt "$drman_zip_file" | grep 'No errors detected in compressed data')
@@ -219,6 +220,7 @@ if [[ "$cygwin" == 'true' ]]; then
 	drman_zip_file=$(cygpath -w "$drman_zip_file")
 	drman_stage_folder=$(cygpath -w "$drman_stage_folder")
 fi
+echo unzip -qo "$drman_zip_file" -d "$drman_stage_folder"
 unzip -qo "$drman_zip_file" -d "$drman_stage_folder"
 
 
