@@ -37,8 +37,8 @@ cp dist/tmpl/get.drman.io.tmpl dist/get.drman.io
 
 #update version on dist branch
 for file in "dist/get.drman.io"; do
-	#echo sed -i "s/@DRM_VERSION@/$VERSION/g" "$file"
-	sed -i "s/@DRM_VERSION@/$VERSION/g" "$file"
+	#echo sed -i "s/@DRMAN_VERSION@/$VERSION/g" "$file"
+	sed -i "s/@DRMAN_VERSION@/$VERSION/g" "$file"
 	git add "$file"
 done
 
