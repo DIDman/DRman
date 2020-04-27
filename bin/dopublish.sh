@@ -5,7 +5,7 @@ branch="RELEASE"
 drman_namespace="${DRMAN_NAMESPACE:-DIDman}"
 drman_candidate_branch="${DRMAN_CANDIDATE_BRANCH:-candidates}"
 drman_candidate_repo_version="${DRMAN_CANDIDATE_REPO_VERSION:-1}"
-drman_candidate_api="https://raw.githubusercontent.com/${drman_namespace}/DRman/${drman_candidate_branch}/candidates/${drman_candidate_repo_version}"
+drman_candidates_api="https://raw.githubusercontent.com/${drman_namespace}/DRman/${drman_candidate_branch}/candidates/${drman_candidate_repo_version}"
 #sanity
 if [[ -z "$version" ]]; then
 	echo "Usage: dopublish.sh <version>"
@@ -31,7 +31,7 @@ for file in "build/scripts/drman-init.sh" ; do
 	sed -i "s/@DRMAN_NAMESPACE@/$drman_namespace/g" "$file"
 	sed -i "s/@DRMAN_CANDIDATE_BRANCH@/$drman_candidate_branch/g" "$file"
 	sed -i "s/@DRMAN_CANDIDATE_REPO_VERSION@/$drman_candidate_repo_version/g" "$file"
-    sed -i "s/@DRMAN_CANDIDATE_API@/$drman_candidate_api/g" "$file"
+    sed -i "s/@DRMAN_CANDIDATES_API@/$drman_candidates_api/g" "$file"
 
 	git add "$file"
 done
