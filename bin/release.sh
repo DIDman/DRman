@@ -18,7 +18,7 @@ git checkout -b "$BRANCH"
 
 # update version on release branch
 for file in ".travis.yml"; do
-	echo sed -i "s/@DRM_VERSION@/$VERSION/g" "$file"
+	echo sed -i "s/@DRMAN_VERSION@/$VERSION/g" "$file"
 	echo git add "$file"
 done
 
