@@ -5,7 +5,7 @@ branch="RELEASE"
 drman_namespace="${DRMAN_NAMESPACE:-DIDman}"
 drman_candidate_branch="${DRMAN_CANDIDATE_BRANCH:-candidates}"
 drman_candidate_repo_version="${DRMAN_CANDIDATE_REPO_VERSION:-1}"
-drman_candidates_api="https://raw.githubusercontent.com/${drman_namespace}/DRman/${drman_candidate_branch}/candidates/${drman_candidate_repo_version}"
+drman_candidates_api="https:\/\/raw.githubusercontent.com\/${drman_namespace}\/DRman\/${drman_candidate_branch}\/candidates\/${drman_candidate_repo_version}"
 #sanity
 if [[ -z "$version" ]]; then
 	echo "Usage: dopublish.sh <version>"
