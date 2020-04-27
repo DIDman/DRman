@@ -16,3 +16,4 @@ drman.iws
 mongo.json
 out/
 target/
+tmp
