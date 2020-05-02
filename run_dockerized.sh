@@ -8,7 +8,7 @@ docker run \
   -it \
   -v $PWD:/usr/src/app \
   -v $HOME/.gradle:/root/.gradle \
-   --entrypoint=/bin/bash \
-  drman/gradle \
+  --entrypoint=/bin/bash \
+  drman/gradle
 
  

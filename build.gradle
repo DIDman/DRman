@@ -68,7 +68,7 @@ tasks.test.configure {
 }
 
 task assembleArchive(type: Zip, dependsOn: prepareScripts) {
-	archiveAppendix = 'cli'
+	//archiveAppendix = 'cli'
 	archiveVersion = drmanBuildVersion
 	from('build/scripts')
 	include('*.sh*')
