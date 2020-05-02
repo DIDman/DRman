@@ -25,10 +25,6 @@ All DRMAN's BDD tests describing the CLI behaviour are written in Cucumber and c
 
     $ ./gradlew test
 
-To perform development, you will need to have a JDK 8 or higher installed which can be obtained by running the following after installing DRMAN:
-
-    $ drm install java
-
 ### Using Docker for tests
 
 You can run the tests in a Docker container to guarantee a clean test environment.
