@@ -1,0 +1,16 @@
+			Candidate List
+      
+        "asciidoctorj",
+				"crash",
+				"gaiden",
+				"glide",
+				"gradle",
+				"grails",
+				"griffon",
+				"groovy",
+				"groovyserv",
+				"jbake",
+				"jbossforge",
+				"lazybones",
+				"springboot",
+				"vertx"
