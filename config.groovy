@@ -8,8 +8,8 @@ environments {
 		candidatesApi = 'http://localhost:8080/2'
 	}
 	production {
-		candidatesApi = 'https://raw.githubusercontent.com/${DRMAN_NAMESPACE}/DRman/blob/${DRMAN_CANDIDATE_BRANCH}/${distributionBranch}/${DRMAN_CANDIDATE_REPO_VERSION}'
-		// Default => candidatesApi = 'https://raw.githubusercontent.com/DIDman/DRman/blob/canditates/dist/1'
+		candidatesApi = 'https://raw.githubusercontent.com/${DRMAN_NAMESPACE}/DRman/blob/${candidateBranch}/${distributionBranch}/{candidateRepoVersion}'
+		// Default => candidatesApi = 'https://raw.githubusercontent.com/DIDman/DRman/canditates/dist/1'
 	
 	}
 }
