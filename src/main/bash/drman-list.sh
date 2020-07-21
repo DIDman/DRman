@@ -30,7 +30,7 @@ function __drman_list_candidates() {
 	if [[ "$DRMAN_AVAILABLE" == "false" ]]; then
 		__drman_echo_red "This command is not available while offline."
 	else
-		__drman_page echo "$(__drman_secure_curl "${DRMAN_CANDIDATES_API}/list")"
+		__drman_page echo "$(__drman_secure_curl "${DRMAN_CANDIDATES_API}/candidates/list")"
 	fi
 }
 
