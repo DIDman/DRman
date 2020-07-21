@@ -55,7 +55,7 @@ task prepareScripts(type: Copy) {
 			tokens: [
 					DRMAN_VERSION: drmanBuildVersion,
 					DRMAN_NAMESPACE: config.drmanNamespace,
-					DRMAN_CANDIDATE_BRANCH: config.candidateBranch,
+					DRMAN_CANDIDATE_BRANCH: §.candidateBranch,
 					DRMAN_CANDIDATE_REPO_VERSION: config.candidateRepoVersion,    
 					DRMAN_CANDIDATES_API: config.candidatesApi
 			]
