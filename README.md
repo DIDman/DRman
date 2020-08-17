@@ -64,7 +64,7 @@ Hyperledger Wiki link. https://wiki.hyperledger.org/pages/viewpage.action?pageId
 - [ ] Decouple BCGov Docker images and Replace it with our docker image for testing
 - [ ] Installation of Aries Ecosystem
 
-### Things I'll Do This Month: November 2014
+### Things I'll Do This Month: August 2020
 - [ ] Write a blog post
 - [x] Initiate a sprint progress update in github
 
