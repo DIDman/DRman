@@ -10,6 +10,19 @@ More details about this project is available at.
 Hyperledger Wiki link. https://wiki.hyperledger.org/pages/viewpage.action?pageId=31195277
  
 
+## Goal 
+
+ Enable a Zero Infrastructure cost.
+ 
+ Enable trusted communication via Verifiable Credential Registry.
+ 
+ Utilize Aries ecosystem to enable plug and play infrastruture.
+ 
+## Why Verifiable Credential Regsitry 
+
+  VCR Stands on its own
+  
+  VCR Works on top of the github
 
 ## Installation
 
@@ -47,3 +60,5 @@ Or run install locally with Production configuration:
 
 	$ ./gradlew -Penv=production install
 	$ source ~/.drman/bin/drman-init.sh
+
+	
