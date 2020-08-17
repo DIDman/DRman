@@ -74,7 +74,7 @@ Hyperledger Wiki link. https://wiki.hyperledger.org/pages/viewpage.action?pageId
 ### Backlog: Code Things I Want to Do/Play With
 1. Aries Sample Code
 
-#################################################################################################################################################################
+
 ## Installation
 
 Open your favourite terminal and enter the following:
