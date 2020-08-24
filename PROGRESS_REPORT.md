@@ -1,8 +1,16 @@
 
 
 # August 24, 2020
+ 
+### Upcoming Goal: Work on RF-0.0.1 (https://github.com/DIDman/DRman/issues/3) 
 
-### This Sprint's Goal: Install Aries VCR.
+### Things I'll Do next week: August 2020
+- [ ] Will work on https://github.com/DIDman/DRman/issues/3
+	- [ ]  Explore the schema of Hyperledger Aries
+	- [ ]  Create a compatable schema for the, Yet to be created Github Repo 
+	- [ ]  Make a script to create a dummy github repo
+	- [ ]  Make a script to create dummy schema from Drman
+	
 
 ## Things I have done last week:
 - [x] HL Indy Email Verification Service Setup
@@ -18,25 +26,15 @@
   - [x] VON Network Setup Successful
   - [x] Facing quiet a few issues with Aries VCR
 
-
-### Things I'll Do next week: August 2020
-- [ ] Will work on https://github.com/DIDman/DRman/issues/3 asd
-	- [ ]  Explore the schema of Hyperledger Aries
-	- [ ]  Create a compatable schema for the, Yet to be created Github Repo 
-	- [ ]  Make a script to create a dummy github repo
-	- [ ]  Make a script to create dummy schema from Drman
-
 ### Backlog: Side Projects :)
 - [ ] NA
 
 ### Backlog: Code Things I Want to Do/Play With
-1. Aries Sample Code
+- [ ] NA
 
 
 
 # August 17, 2020
-
-### This Sprint's Goal: Install Aries VCR.
 
 ## Things I'll Do This sprint:
 - [x] Exploring more at https://courses.edx.org/courses/course-v1:LinuxFoundationX+LFS173x+1T2020/course/
@@ -52,7 +50,6 @@
 
 ### Backlog: Code Things I Want to Do/Play With
 1. Aries Sample Code
-
 
 
 ## Goals 
