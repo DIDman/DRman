@@ -55,6 +55,39 @@ Hyperledger Wiki link. https://wiki.hyperledger.org/pages/viewpage.action?pageId
 5. Learn more about Aries Ecosystem
 6. Install Hyperledger Aries
 
+
+
+# August 24, 2020
+
+### This Sprint's Goal: Install Aries VCR.
+
+## Things I have done last week:
+- [x] HL Indy Email Verification Service Setup
+      - Had a few installation Issues
+	  - Explored about s2i
+- [x] Experimented with Aries Cloudagent Python
+      - Enabled communication with Alice & Faber withouT Ledger using swagger
+	  - Credentials issued by Faber Agent 
+	  - Placed Verifiable Credentials in the public ledger to enable the presentation of proofs 
+- [x] Aries VCR Setup
+      - VON Network Setup Successful
+	  - Facing quiet a few issues with Aries VCR  
+- [ ] Decouple BCGov Docker images and Replace it with our docker image for testing
+
+### Things I'll Do This Month: August 2020
+- [ ] Write a blog post - - Planned to do it at the end of the project 
+- [ ] 
+
+### Backlog: Side Projects :)
+- [ ] NA
+
+### Backlog: Code Things I Want to Do/Play With
+1. Aries Sample Code
+
+
+
+
+
 # August 17, 2020
 
 ### This Sprint's Goal: Install Aries VCR.
@@ -65,7 +98,7 @@ Hyperledger Wiki link. https://wiki.hyperledger.org/pages/viewpage.action?pageId
 - [ ] Installation of Aries Ecosystem
 
 ### Things I'll Do This Month: August 2020
-- [ ] Write a blog post
+- [ ] Write a blog post 
 - [x] Initiate a sprint progress update in github
 
 ### Backlog: Side Projects :)
