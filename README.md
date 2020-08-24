@@ -48,4 +48,4 @@ Or run install locally with Production configuration:
 	
 ### Track the Progress	
 	
-	To know more about the current progress of this project , please check https://github.com/arunprakashpj/DRman/blob/master/PROGRESS_REPORT.md
+	To know more about the current progress of this project , please check PROGRESS_REPORT.md file
