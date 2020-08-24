@@ -45,5 +45,7 @@ Or run install locally with Production configuration:
 
 	$ ./gradlew -Penv=production install
 	$ source ~/.drman/bin/drman-init.sh
-
 	
+### Track the Progress	
+	
+	To know more about the current progress of this project , please check https://github.com/arunprakashpj/DRman/blob/master/PROGRESS_REPORT.md
