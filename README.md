@@ -8,8 +8,6 @@ You can read up on DID(https://www.w3.org/TR/did-core/) and what a DID registry 
 More details about this project is available at.
 
 Hyperledger Wiki link. https://wiki.hyperledger.org/pages/viewpage.action?pageId=31195277
- 
-
 
 ## Installation
 
@@ -47,3 +45,7 @@ Or run install locally with Production configuration:
 
 	$ ./gradlew -Penv=production install
 	$ source ~/.drman/bin/drman-init.sh
+	
+### Track the Progress	
+	
+	To know more about the current progress of this project , please check PROGRESS_REPORT.md file
