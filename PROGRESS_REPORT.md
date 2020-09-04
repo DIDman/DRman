@@ -1,4 +1,18 @@
 
+# September 04, 2020
+ 
+### Upcoming Goal: Work on RF-0.0.1 (https://github.com/DIDman/DRman/issues/3) 
+
+### Things I'll Do next week: August 2020
+- [ ] Will work on https://github.com/DIDman/DRman/issues/3
+	- [ ]  Create a compatable schema for the, Yet to be created Github Repo  -- In Progress
+	- [ ]  Script Integration with  Drman -- In Progress
+	
+
+## Things I have done last week:
+- Working on https://github.com/DIDman/DRman/issues/3
+	- [x]  Explored the schema of Hyperledger Aries
+	- [x]  Made a script to create a dummy github repo
 
 # August 24, 2020
  
