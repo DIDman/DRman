@@ -55,6 +55,9 @@ function drm() {
 	h)
 		COMMAND="home"
 		;;
+	h)
+		COMMAND="CreateVCR"
+		;;
 	esac
 
 	if [[ "$COMMAND" == "home" ]]; then
