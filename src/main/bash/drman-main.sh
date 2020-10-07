@@ -55,8 +55,8 @@ function drm() {
 	h)
 		COMMAND="home"
 		;;
-	h)
-		COMMAND="CreateVCR"
+	gvcr)
+		COMMAND="githubVCR"
 		;;
 	esac
 

@@ -30,6 +30,7 @@ function __drm_help() {
 	__drman_echo_no_colour "       home      or h    <candidate> <version>"
 	__drman_echo_no_colour "       current   or c    [candidate]"
 	__drman_echo_no_colour "       upgrade   or ug   [candidate]"
+	__drman_echo_no_colour "       githubVCR   or gvcr   [candidate]"
 	__drman_echo_no_colour "       version   or v"
 	__drman_echo_no_colour "       broadcast or b"
 	__drman_echo_no_colour "       help"
