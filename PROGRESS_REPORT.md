@@ -1,4 +1,11 @@
 
+# November 11, 2020
+ 
+## Things In progres for demo:
+- Working on the Architecture
+	- [x]  Version 3 : https://docs.google.com/document/d/1Yryir_OV-VgIiAJeXZkL7t8jCvUtEy57ci1fGZueHhg/edit?usp=sharing
+
+
 # September 04, 2020
  
 ### Upcoming Goal: Work on RF-0.0.1 (https://github.com/DIDman/DRman/issues/3) 
