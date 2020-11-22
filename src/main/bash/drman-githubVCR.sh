@@ -8,11 +8,11 @@ function __drm_githubVCR() {
         case $opt in
             "Create")
                 echo "Lets Create Github VCR"
-                sh ./create-github-vcr.sh
+                sh ..../helper/create-github-vcr.sh
                 ;;
             "Delete")
                 echo "You opeted to delete Gitlab VCR"
-                sh ./delete-github-vcr.sh           
+                sh ..../helper/delete-github-vcr.sh           
                 ;;
             "Other")
                 echo "To be filled"        
