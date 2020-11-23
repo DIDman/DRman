@@ -55,6 +55,9 @@ function drm() {
 	h)
 		COMMAND="home"
 		;;
+	gvcr)
+		COMMAND="githubVCR"
+		;;
 	esac
 
 	if [[ "$COMMAND" == "home" ]]; then
