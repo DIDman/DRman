@@ -1,4 +1,41 @@
 
+# August 23, 2021 
+
+## Things In Progess: 
+- [ ] Explore Hyperledger Aries Project (roughly)
+  - [] Install and text Aries Python CloudAgent 
+
+- [ ] Explore a set of GitHub API involved
+  - [] A list of all involved GitHub API 
+
+- [ ] Procedure to create a repository for a Github/Non-Github organization
+
+
+## Things I have done: 
+- [x] Warm up by Project Setup - DRman (https://github.com/DIDman/DRman)
+  - [x] Fixed few installation Issues
+  - [x] Explored about s2i
+
+- [x] Check up with the progress of previous project
+
+- [x] Explore VC Registry (Check relevant W3C standard documents)
+  - [x] Checked Verifiable Credentials Data Model 1.0 (https://www.w3.org/TR/vc-data-model/)
+  - [x] Checked Decentralized Identifiers (DIDs) v1.0 (https://www.w3.org/TR/did-core/)
+  - [x] Checked Verifiable Credentials Implementation Guidelines 1.0 (https://www.w3.org/TR/vc-imp-guide/)
+
+
+- [x] Explore DRM commands
+  - [x] Checked helper/create-github-vcr.sh
+  - [x] Checked helper/delete-github-vcr.sh
+
+- [x] Explore DID repository
+
+- [x] The architecuture of DRMAN in verfiable credential model 
+
+- [x] Explore Von-network 
+  - [x] Installed on local machine and AWS 
+
+
 # November 11, 2020
  
 ## Things In progres for demo:
