@@ -1,3 +1,17 @@
+# September 14, 2021
+
+## Things in Progress: 
+- [ ] Figure out a detailed workflow for RF-0.0.1
+- [ ] Procedure to create a repository for a Github/Non-Github organization
+
+
+## Things I have done: 
+- [x] Explore a set of GitHub API involved
+  - [x] A list of all involved GitHub API 
+
+- [x] Explore Hyperledger Aries Project (roughly)
+  - [x] Install and text Aries Python CloudAgent 
+
 
 # August 23, 2021 
 
@@ -22,7 +36,6 @@
   - [x] Checked Verifiable Credentials Data Model 1.0 (https://www.w3.org/TR/vc-data-model/)
   - [x] Checked Decentralized Identifiers (DIDs) v1.0 (https://www.w3.org/TR/did-core/)
   - [x] Checked Verifiable Credentials Implementation Guidelines 1.0 (https://www.w3.org/TR/vc-imp-guide/)
-
 
 - [x] Explore DRM commands
   - [x] Checked helper/create-github-vcr.sh
