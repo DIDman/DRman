@@ -1,9 +1,26 @@
-# September 14, 2021
+# Octorber 12, 2021 
 
 ## Things in Progress: 
-- [ ] Figure out a detailed workflow for RF-0.0.1
-- [ ] Procedure to create a repository for a Github/Non-Github organization
+- [ ] Figure out the full workflow by using organizations in GitHub
 
+## Things I have done: 
+- [x] Checked a GitHub API REST v3
+  - [x] User
+  - [x] Repository
+  - [x] Organization
+
+- [x] Check another open-source project used to generate DID 
+  - [x] GITDID, (https://github-did.com/)
+
+
+# September 29, 2021 
+
+## Things I have done: 
+- [x] Figure out a detailed workflow for RF-0.0.1
+- [x] Procedure to create a repository for a Github/Non-Github organization
+
+
+# September 14, 2021
 
 ## Things I have done: 
 - [x] Explore a set of GitHub API involved
@@ -14,16 +31,6 @@
 
 
 # August 23, 2021 
-
-## Things In Progess: 
-- [ ] Explore Hyperledger Aries Project (roughly)
-  - [] Install and text Aries Python CloudAgent 
-
-- [ ] Explore a set of GitHub API involved
-  - [] A list of all involved GitHub API 
-
-- [ ] Procedure to create a repository for a Github/Non-Github organization
-
 
 ## Things I have done: 
 - [x] Warm up by Project Setup - DRman (https://github.com/DIDman/DRman)
