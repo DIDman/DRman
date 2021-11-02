@@ -1,7 +1,21 @@
+# Octorber 27, 2021
+## Things in Progress: 
+- [] Full map of the architecuture and workflow
+- [] Slides for final presentation
+- [] Check if any potential reserach opportunities    
+
+## Things I have done: 
+- [x] Check some paper and project which using Git as distributed storage solution 
+  - [x] RepoBee: Developing Tool Support for Courses using Git/GitHub, https://dl.acm.org/doi/10.1145/3304221.3319784
+  - [x] Trusty URIs: Verifiable, Immutable, and Permanent Digital Artifacts for Linked Data, https://link.springer.com/content/pdf/10.1007/978-3-319-07443-6_27.pdf
+  - [x] Reliable e-Assessment with GIT ¨C Practical 
+Considerations and Implementation, https://www.eunis.org/eunis2017/wp-content/uploads/sites/10/2017/06/EUNIS_2017_paper_22.pdf
+
+
 # Octorber 12, 2021 
 
 ## Things in Progress: 
-- [ ] Figure out the full workflow by using organizations in GitHub
+- [x] Figure out the full workflow by using organizations in GitHub
 
 ## Things I have done: 
 - [x] Checked a GitHub API REST v3
