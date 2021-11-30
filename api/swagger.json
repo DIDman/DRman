@@ -1,0 +1,117 @@
+{
+    "info": {
+      "title": "DIDman - DID Registry Manager",
+      "version": "0.0.1",
+      "description": "Using DRman to create VCR under GitHub/GitLab repository"
+    },
+    "basePath": "/api/v1",
+    "swagger": "2.0",
+    "paths": {
+      "/{org}": {
+        "post": {
+            "description": "Create GitHub/GitLab VCR for an orgnazation",
+            "tags": [
+              "org"
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "in": "path",
+                "name": "org",
+                "description": "Create VCR for an orgnization, according to the input parameter to decide the VCR is under GitHub or other code base repository",
+                "required": true,
+                "type": "string",
+                "value": "{org}:{repoType}"
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "VCR created successfully",
+                "type": "string"
+            }
+          }
+        }
+      },
+      "/{user}": {
+        "post": {
+            "description": "Add user to an organization VCR, and assign a role to the user",
+            "tags": [
+              "user"
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "in": "path",
+                "name": "user",
+                "description": "Add user by user id, and assign a repository role to the user. The roles are defined under https://docs.github.com/en/organizations/managing-peoples-access-to-your-organization-with-roles/roles-in-an-organization. The input format is {org}:{userid}:{roleName}",
+                "required": true,
+                "type": "string",
+                "value": "{org}:{userid}:{roleName}"
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Added user to the organization successfully",
+                "type": "string"
+            }
+          }
+        }
+      },
+      "/version": {
+        "get": {
+          "tags": [
+            "System"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "successful response",
+              "type": "object",
+              "properties": {
+                "version": {
+                  "type": "string",
+                  "example": "0.0.1"
+                }
+              }
+            }
+          }
+        }
+      },
+      "/.well-known/webfinger": {
+        "get": {
+          "tags": [
+            "System"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "query",
+              "name": "resource",
+              "description": "resource to check",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Webfinger Record",
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {},
+    "responses": {},
+    "parameters": {},
+    "securityDefinitions": {},
+    "tags": []
+  }
