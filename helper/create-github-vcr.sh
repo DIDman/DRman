@@ -7,13 +7,13 @@ usage() {
 [`basename $0`]
 USAGE: `basename $0` [-h]
        `basename $0` [-l]
-       `basename $0` [-v] [-o orgname] [-r reponame]
+       `basename $0` [-v] [-o ORGNAME] [-r REPONAME]
 
 OPTIONS:
   -h  usage
   -r  repository name (default is the current directory base name)
   -o  github organization name
-  -v  verbose (debugging)
+  -v  VERBOSE (debugging)
   -l  list remote repositories (diagnostic only)
 
 See http://developer.github.com/v3/ for GitHub API v3. Note that curl is being
@@ -23,8 +23,8 @@ EOF
 }
 
 # default options
-reponame=`basename $(pwd)`
-verbose=false
+REPONAME=`basename $(pwd)`
+VERBOSE=false
 list_only=false
 
 # parse options using getopts
@@ -34,11 +34,11 @@ do
     h)  usage
         exit 0
         ;;
-    r)  reponame=$OPTARG
+    r)  REPONAME=$OPTARG
         ;;
-    o)  orgname=$OPTARG
+    o)  ORGNAME=$OPTARG
         ;;
-    v)  verbose=true
+    v)  VERBOSE=true
         ;;
     l)  list_only=true
         ;;
@@ -57,51 +57,53 @@ done
 echo "[`basename $0`]"
 
 # validate github credentials for https security 
-if [ "$orgname" = "" ]; then
+if [ "$ORGNAME" = "" ]; then
   echo "Enter a organization name: use -o <organization name>"
   exit 3
 fi
 
 # List all the organization repos
 if $list_only; then
-  if $verbose; then echo "Listing remote repositories ..."; fi
-  ./api-github-vcr.sh list-organization-repositories $orgname 
+  if $VERBOSE; then echo "Listing remote repositories ..."; fi
+  ./api-github-vcr.sh list-organization-repositories $ORGNAME 
   exit $?
 fi
 
 # sanity check before messing with remote server
 echo "Parameters provided or default parameters assumed"
-echo "  organization name = $orgname"
-echo "  repository name = $reponame"
-echo "  platform = Github"
+echo "  organization name = $ORGNAME"
+echo "  repository name = $REPONAME"
+echo "  regitsry provider = Github"
 read -p "Proceed [y/n]: " answer
 if [ $answer != "y" ]; then
   echo "`basename $0`: aborted"
   exit 0
 fi
 
-export verbose
+export VERBOSE
+export ORGNAME
+export REPONAME
+
 # create an organization if it doesn't exists
-./api-github-vcr.sh find-organization $orgname
+./api-github-vcr.sh find-organization
   if [ $? -ne 0 ]; then
-      ./api-github-vcr.sh create-organization $orgname
+      ./api-github-vcr.sh create-organization
       if [ $? -ne 0 ]; then exit $?; fi
   fi
   
 # check if user is a member of the organization
-./api-github-vcr.sh check-organization-membership $orgname
+./api-github-vcr.sh check-organization-membership
 if [ $? -ne 0 ]; then exit $?; fi
 
 # TODO: check for existing repository
 
 # create a gitub repository
-./api-github-vcr.sh create-repository $orgname $reponame
+./api-github-vcr.sh create-repository
 if [ $? -ne 0 ]; then exit $?; fi
 
-# prepare the template of repository
-# TODO: Get a path from the user
+# Prepare the template of repository
 username=`git config --global github.user`
-mkdir ./$reponame && cd $reponame
+mkdir ./$REPONAME && cd $REPONAME
 touch .gitignore
 touch README.md
 mkdir "./admin" && cd "admin"
@@ -109,11 +111,20 @@ mkdir $username && cd $username
 touch DID.txt
 cd ../..
 # TODO: integrate generate did script
-# TODO: add restrictions
 git init 
 git add .gitignore README.md admin
-git commit -m "genesis transaction"
-git remote add gvcr "https://github.com/$orgname/$reponame.git"
-git push -u gvcr master 
+git commit -sm "genesis transaction"
+git remote add gvcr "https://github.com/$ORGNAME/$REPONAME.git"
+git push -u gvcr master
 
-if $verbose; then echo "`basename $0`: finished"; fi
+# return to root folder
+cd ..
+# add branch protection
+./api-github-vcr.sh add-branch-protection
+if [ $? -ne 0 ]; then exit $?; fi
+
+# add signature protection
+./api-github-vcr.sh add-signature-protection
+if [ $? -ne 0 ]; then exit $?; fi
+
+if $VERBOSE; then echo "`basename $0`: finished"; fi
