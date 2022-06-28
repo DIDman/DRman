@@ -28,7 +28,7 @@ VERBOSE=false
 list_only=false
 
 # parse options using getopts
-while getopts ":hr:m:d:o:u:f:vl" OPTION # while getopts ":hr:c:m:vl" OPTION
+while getopts ":hr:o:vl" OPTION
 do
   case $OPTION in
     h)  usage
@@ -65,7 +65,7 @@ fi
 # List all the organization repos
 if $list_only; then
   if $VERBOSE; then echo "Listing remote repositories ..."; fi
-  ./api-github-vcr.sh list-organization-repositories $ORGNAME 
+  $DRMAN_DIR/helper/api-github-vcr.sh list-organization-repositories $ORGNAME 
   exit $?
 fi
 
@@ -85,20 +85,20 @@ export ORGNAME
 export REPONAME
 
 # create an organization if it doesn't exists
-./api-github-vcr.sh find-organization
+$DRMAN_DIR/helper/api-github-vcr.sh find-organization
   if [ $? -ne 0 ]; then
-      ./api-github-vcr.sh create-organization
+      $DRMAN_DIR/helper/api-github-vcr.sh create-organization
       if [ $? -ne 0 ]; then exit $?; fi
   fi
   
 # check if user is a member of the organization
-./api-github-vcr.sh check-organization-membership
+$DRMAN_DIR/helper/api-github-vcr.sh check-organization-membership
 if [ $? -ne 0 ]; then exit $?; fi
 
 # TODO: check for existing repository
 
 # create a gitub repository
-./api-github-vcr.sh create-repository
+$DRMAN_DIR/helper/api-github-vcr.sh create-repository
 if [ $? -ne 0 ]; then exit $?; fi
 
 # Prepare the template of repository
@@ -120,11 +120,11 @@ git push -u gvcr master
 # return to root folder
 cd ..
 # add branch protection
-./api-github-vcr.sh add-branch-protection
+$DRMAN_DIR/helper/api-github-vcr.sh add-branch-protection
 if [ $? -ne 0 ]; then exit $?; fi
 
 # add signature protection
-./api-github-vcr.sh add-signature-protection
+$DRMAN_DIR/helper/api-github-vcr.sh add-signature-protection
 if [ $? -ne 0 ]; then exit $?; fi
 
 if $VERBOSE; then echo "`basename $0`: finished"; fi

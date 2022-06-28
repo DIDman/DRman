@@ -10,9 +10,9 @@ APITOKEN=`git config --global github.token`
 # get github credentials
 get_github_credentials() {
     [ -z $USERNAME ] && echo 'Username: '
-    until [ "$USERNAME" != "" ]; do read USERNAME; git config --global USERNAME; done
+    until [ "$USERNAME" != "" ]; do read USERNAME ; git config --global github.user $USERNAME; done
     [ -z $APITOKEN ] && echo 'Apitoken: '
-    until [ "$APITOKEN" != "" ]; do read APITOKEN; git config --global APITOKEN; done
+    until [ "$APITOKEN" != "" ]; do read APITOKEN ; git config --global github.token $APITOKEN; done
 }
 
 #list organization repositories
@@ -31,6 +31,7 @@ find_organization() {
 }
 
 create_organization() {
+    get_github_credentials
     if $VERBOSE;  then echo "Creating github $ORGNAME organization ... "; fi
     status_code=$(curl -u "$USERNAME:$APITOKEN" -w '%{http_code}' -s -o /dev/null -X POST -H "Accept: application/vnd.github.v3+json" https://$HOSTAPI/admin/organizations -d '{"login":"$ORGNAME","profile_name":"$ORGNAME","admin":"$USERNAME"}')
     if [ $status_code -ne 201 ]; then if $VERBOSE; then echo "Only an enterprise account can create an organization"; fi; return 5; fi
@@ -46,6 +47,7 @@ check_organization_membership() {
 }
 
 create_repository() {
+    get_github_credentials
     if $VERBOSE; then echo "Creating $ORGNAME organization repository $REPONAME ..."; fi
     status_code=$(curl -w '%{http_code}' -s -o /dev/null -u "$USERNAME:$APITOKEN" https://api.github.com/orgs/$ORGNAME/repos -d '{"name":"'$REPONAME'"}')
         if [ $status_code -ne 201 ]; then if $VERBOSE; then echo "`basename $0`: curl could not create $ORGNAME organization repository $REPONAME"; fi; return 5; fi

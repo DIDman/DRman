@@ -1,18 +1,16 @@
 # main menu
 
 function __drm_githubVCR() {
-    PS3='Please choose your target VCR: '
+    PS3='Please choose an operation: '
     options=("Create" "Delete" "Other")
     select opt in "${options[@]}"
     do
         case $opt in
             "Create")
                 echo "Lets Create Github VCR"
-                sh ..../helper/create-github-vcr.sh
-                ;;
-            "Delete")
-                echo "You opeted to delete Gitlab VCR"
-                sh ..../helper/delete-github-vcr.sh           
+                read -p "Organization Name: " ORGNAME
+                read -p "Repository Name: " REPONAME
+                sh $DRMAN_DIR/helper/create-github-vcr.sh -o $ORGNAME -r $REPONAME
                 ;;
             "Other")
                 echo "To be filled"        
