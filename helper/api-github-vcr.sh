@@ -1,11 +1,11 @@
 #!/bin/bash
-# github-authenticate-user
+# github-apis
 
 HOSTNAME="github.com"
 HOSTAPI="api.github.com"
 USERNAME=`git config --global github.user`
 APITOKEN=`git config --global github.token`
-[ -z $VERBOSE ] && VERBOSE=false
+[ -z $VERBOSE ] && VERBOSE=true
  
 # get github credentials
 get_github_credentials() {
@@ -17,7 +17,6 @@ get_github_credentials() {
 
 #list organization repositories
 list_organization_repositories() {
-    get_github_credentials
     curl -s -u "$USERNAME:$APITOKEN" https://$HOSTAPI/orgs/$ORGNAME/repos | grep "\"full_name\":" | cut -d \" -f 4 2>&1
         if [ $? -ne 0 ]; then echo "`basename $0`: curl could not perform GET"; return 5; fi
     return 0
@@ -31,7 +30,6 @@ find_organization() {
 }
 
 create_organization() {
-    get_github_credentials
     if $VERBOSE;  then echo "Creating github $ORGNAME organization ... "; fi
     status_code=$(curl -u "$USERNAME:$APITOKEN" -w '%{http_code}' -s -o /dev/null -X POST -H "Accept: application/vnd.github.v3+json" https://$HOSTAPI/admin/organizations -d '{"login":"$ORGNAME","profile_name":"$ORGNAME","admin":"$USERNAME"}')
     if [ $status_code -ne 201 ]; then if $VERBOSE; then echo "Only an enterprise account can create an organization"; fi; return 5; fi
@@ -39,7 +37,6 @@ create_organization() {
 }
 
 check_organization_membership() {
-    get_github_credentials
     if $VERBOSE; then echo "Verifying $ORGNAME organization membership"; fi
     status_code=$(curl -u "$USERNAME:$APITOKEN" -w '%{http_code}' -s -o /dev/null -H "Accept: application/vnd.github.v3+json" https://$HOSTAPI/orgs/$ORGNAME/members/$USERNAME)
     if [ $status_code -ne 204 ]; then if $VERBOSE; then echo "$ORGNAME Organization membership not found for $USERNAME"; fi; return 5; fi
@@ -47,39 +44,34 @@ check_organization_membership() {
 }
 
 create_repository() {
-    get_github_credentials
     if $VERBOSE; then echo "Creating $ORGNAME organization repository $REPONAME ..."; fi
     status_code=$(curl -w '%{http_code}' -s -o /dev/null -u "$USERNAME:$APITOKEN" https://api.github.com/orgs/$ORGNAME/repos -d '{"name":"'$REPONAME'"}')
         if [ $status_code -ne 201 ]; then if $VERBOSE; then echo "`basename $0`: curl could not create $ORGNAME organization repository $REPONAME"; fi; return 5; fi
     return 0
 }
 
-invite_user_organization() {
-    get_github_credentials
+invite_to_organization() {
     status_code=$(curl -w '%{http_code}' -s -o /dev/null -u "$USERNAME:$APITOKEN" https://api.github.com/orgs/$ORGNAME/invitations -d '{"email":"$2","role":"$3"}')
         if [ $status_code -ne 201 ]; then if $VERBOSE; then echo "`basename $0`: curl could not create $ORGNAME organization invitation for $2"; fi; return 5; fi
     return 0
 }
 
 set_organization_role() {
-    get_github_credentials
     status_code=$(curl -w '%{http_code}' -s -o /dev/null -u "$USERNAME:$APITOKEN" https://api.github.com/orgs/$ORGNAME/memberships/$2 -d '{"role":"$3"}')
         if [ $status_code -ne 200 ]; then if $VERBOSE; then echo "`basename $0`: curl could not set $ORGNAME organization $3 membership for $2"; fi; return 5; fi
     return 0
 }
 
 add_branch_protection() {
-    get_github_credentials
     if $VERBOSE; then echo "Adding branch protection to repository $REPONAME ..."; fi
     status_code=$(curl -w '%{http_code}' -s -o /dev/null -X PUT -H "Authorization: token $APITOKEN" https://$HOSTAPI/repos/$ORGNAME/$REPONAME/branches/master/protection \
-    -d '{"required_status_checks":{"strict":true, "contexts": []},"enforce_admins":true,"required_pull_request_reviews":{"require_code_owner_reviews":true,"required_approving_review_count":2},"restrictions":null,"required_linear_history":true,"required_conversation_resolution":true}' \
+    -d '{"required_status_checks":{"strict":true, "contexts": []},"enforce_admins":true,"required_pull_request_reviews":{"require_code_owner_reviews":true,"required_approving_review_count":1},"restrictions":null,"required_linear_history":true,"required_conversation_resolution":true}' \
     )
     if [ $status_code -ne 200 ]; then if $VERBOSE; then echo "basename $status_code: status_code: $status_code Failed to update branch protection"; fi; return 5; fi
     return 0
 }
 
 add_signature_protection() {
-    get_github_credentials
     if $VERBOSE; then echo "Adding signature protection to repository $REPONAME ..."; fi
     status_code=$(curl \
     -w '%{http_code}' -s -o /dev/null -X POST -H "Authorization: token $APITOKEN" https://api.github.com/repos/$ORGNAME/$REPONAME/branches/master/protection/required_signatures)
@@ -87,10 +79,53 @@ add_signature_protection() {
     return 0
 }
 
+create_team() {
+    if $VERBOSE; then echo "Creating $1 team to $ORGNAME organization ..."; fi
+    case $1 in
+        "${REPONAME}_ADMIN" | "ADMIN")
+            name=$1
+            description='Administrative team'
+            permission='push'
+            privacy='secret'
+        ;;
+        "${REPONAME}_MEMBER" | "MEMBER")
+            name=$1
+            description='Membership team'
+            permission='pull'
+            privacy='closed'
+        ;;
+    esac
+    status_code=$(curl -w '%{http_code}' -s -o /dev/null -X POST -H "Authorization: token $APITOKEN" https://api.github.com/orgs/$ORGNAME/teams \
+    -d '{"name":"'"$name"'","description":"'"$description"'","permission":"'"$permission"'","privacy":"'"$privacy"'","repo_names": ["'"${ORGNAME}/${REPONAME}"'"]}')
+    if [ $status_code -ne 201 ]; then if $VERBOSE; then echo "basename $0: status_code: $status_code Failed to create $1 team"; fi; return 5; fi
+    return 0
+}
+
+list_teams() {
+    if [ -z $1 ]
+    then
+        curl -H "Authorization: token $APITOKEN" https://api.github.com/orgs/$ORGNAME/teams/$1
+    else
+        curl -H "Authorization: token $APITOKEN" https://api.github.com/orgs/$ORGNAME/teams
+    fi
+}
+
+check_team() {
+    status_code=$(curl -w '%{http_code}' -s -o /dev/null -H "Authorization: token $APITOKEN" https://api.github.com/orgs/$ORGNAME/teams/$1)
+    if [ $status_code -ne 200 ]; then if $VERBOSE; then echo "status_code: $status_code $1 team not found"; fi; return 5; fi
+    return 0
+}
+
+read_file() {
+    curl -H "Authorization: token $APITOKEN" https://raw.githubusercontent.com/$ORGNAME/$REPONAME/master/"$1.json"
+    # echo $(curl -H "Authorization: token $APITOKEN" https://api.github.com/repos/$ORGNAME/$REPONAME/contents/"$1.json") | jq -r '.content' | base64 --decode 
+      if [ $? -ne 0 ]; then echo "`basename $0`: curl could not perform GET"; return 5; fi
+    echo ""
+    return 0
+}
+
 case $1 in
-    "list-organization-repositories")
-        list_organization_repositories
-    ;;
+    # organizations
     "find-organization")
         find_organization
     ;;
@@ -100,20 +135,34 @@ case $1 in
     "check-organization-membership")
         check_organization_membership
     ;;
+    "invite-to-organization")
+        invite_to_organization $2 $3
+    ;;
+    "set-organization-role")
+        set_organization_role $2 $3
+    ;;
+    # teams
+    "create-team")
+        create_team $2
+    ;;
+    "add-team-repository")
+        add_team_repository $2
+    ;;
+    "list-teams")
+        list_teams $2
+    ;;
+    "check-team")
+        check_team $2
+    ;;
+    # repositories
+    "list-organization-repositories")
+        list_organization_repositories
+    ;;
     "find-repository")
         find_repository
     ;;
     "create-repository")
         create_repository
-    ;;
-    "invite-member-organization")
-        invite_user_organization $2 "direct_member"
-    ;;
-    "invite-admin-organization")
-        invite_user_organization $2 "admin"
-    ;;
-    "set-organization-role")
-        set_organization_role $2 $3
     ;;
     "set-repository-role")
         set_repository_role $2 $3
@@ -123,5 +172,8 @@ case $1 in
     ;;
     "add-signature-protection")
         add_signature_protection
+    ;;
+    "read-file")
+        read_file $2
     ;;
 esac

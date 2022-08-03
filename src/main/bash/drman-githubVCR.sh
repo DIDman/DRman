@@ -1,22 +1,25 @@
 # main menu
 
 function __drm_githubVCR() {
+    $DRMAN_DIR/helper/api-github-vcr.sh get_github_credentials
     PS3='Please choose an operation: '
-    options=("Create" "Delete" "Other")
+    options=("Organization" "VCR" "DID" "Quit")
     select opt in "${options[@]}"
     do
         case $opt in
-            "Create")
-                echo "Lets Create Github VCR"
-                read -p "Organization Name: " ORGNAME
-                read -p "Repository Name: " REPONAME
-                sh $DRMAN_DIR/helper/create-github-vcr.sh -o $ORGNAME -r $REPONAME
-                ;;
-            "Other")
-                echo "To be filled"        
-                ;;
+            "Organization")
+                set_env
+                $DRMAN_DIR/helper/org-github-vcr.sh
+            ;;
+            "VCR")
+                set_env
+                $DRMAN_DIR/helper/repo-github-vcr.sh               
+            ;;
+            "DID")
+                $DRMAN_DIR/helper/did-github-vcr.sh  
+            ;;
             "Quit")
-                exit
+                exit 0
                 ;;
             *) echo "invalid option $REPLY";;
         esac
