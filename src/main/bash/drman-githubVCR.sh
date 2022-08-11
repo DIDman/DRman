@@ -8,11 +8,9 @@ function __drm_githubVCR() {
     do
         case $opt in
             "Organization")
-                set_env
                 $DRMAN_DIR/helper/org-github-vcr.sh
             ;;
             "VCR")
-                set_env
                 $DRMAN_DIR/helper/repo-github-vcr.sh               
             ;;
             "DID")

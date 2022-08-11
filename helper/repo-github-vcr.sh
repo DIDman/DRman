@@ -8,14 +8,18 @@ select opt in "${options[@]}"
 do
     case $opt in
       "Create")
+        read -p "Organization Name: " ORGNAME
         read -p "VCR Name: " REPONAME
+        export ORGNAME
         export REPONAME
         create_repository
       ;;
       "Invite")
+        read -p "Organization Name: " ORGNAME
         read -p "Username of invitee: " USERID
         read -p "Role of invitee: " ROLE
         read -p "VCR Name: " REPONAME
+        export ORGNAME        
         export REPONAME
         invite_to_repository
       ;;
@@ -56,6 +60,10 @@ $DRMAN_DIR/helper/api-github-vcr.sh check-team "${REPONAME}_MEMBER"
       if [ $? -ne 0 ]; then exit $?; fi
   fi
 
+# create genesis file
+$DRMAN_DIR/helper/api-github-vcr.sh create-file
+if [ $? -ne 0 ]; then exit $?; fi
+
 # add branch protection
 $DRMAN_DIR/helper/api-github-vcr.sh add-branch-protection
 if [ $? -ne 0 ]; then exit $?; fi
@@ -64,12 +72,8 @@ if [ $? -ne 0 ]; then exit $?; fi
 $DRMAN_DIR/helper/api-github-vcr.sh add-signature-protection
 if [ $? -ne 0 ]; then exit $?; fi
 
-if $VERBOSE; then echo "`basename $0`: finished"; fi
+echo "Created $REPONAME vcr successfully"
 
 }
-
-# get organization name
-read -p "Organization Name: " ORGNAME
-export ORGNAME
 
 operation

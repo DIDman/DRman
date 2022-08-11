@@ -5,7 +5,7 @@ HOSTNAME="github.com"
 HOSTAPI="api.github.com"
 USERNAME=`git config --global github.user`
 APITOKEN=`git config --global github.token`
-[ -z $VERBOSE ] && VERBOSE=true
+[ -z $VERBOSE ] && VERBOSE=false
  
 # get github credentials
 get_github_credentials() {
@@ -23,28 +23,28 @@ list_organization_repositories() {
 }
 
 find_organization() {
-    if $VERBOSE; then echo "Finding organization $ORGNAME"; fi
+    echo "Finding organization $ORGNAME"
     status_code=$(curl -w '%{http_code}' -s -o /dev/null -H "Accept: application/vnd.github.v3+json" https://$HOSTAPI/orgs/$ORGNAME)
     if [ $status_code -ne 200 ]; then if $VERBOSE; then echo "Cannot find organization"; fi; return 5; fi
     return 0
 }
 
 create_organization() {
-    if $VERBOSE;  then echo "Creating github $ORGNAME organization ... "; fi
+    echo "Creating github $ORGNAME organization ... "
     status_code=$(curl -u "$USERNAME:$APITOKEN" -w '%{http_code}' -s -o /dev/null -X POST -H "Accept: application/vnd.github.v3+json" https://$HOSTAPI/admin/organizations -d '{"login":"$ORGNAME","profile_name":"$ORGNAME","admin":"$USERNAME"}')
     if [ $status_code -ne 201 ]; then if $VERBOSE; then echo "Only an enterprise account can create an organization"; fi; return 5; fi
     return 0
 }
 
 check_organization_membership() {
-    if $VERBOSE; then echo "Verifying $ORGNAME organization membership"; fi
+    echo "Verifying $ORGNAME organization membership"
     status_code=$(curl -u "$USERNAME:$APITOKEN" -w '%{http_code}' -s -o /dev/null -H "Accept: application/vnd.github.v3+json" https://$HOSTAPI/orgs/$ORGNAME/members/$USERNAME)
     if [ $status_code -ne 204 ]; then if $VERBOSE; then echo "$ORGNAME Organization membership not found for $USERNAME"; fi; return 5; fi
     return 0
 }
 
 create_repository() {
-    if $VERBOSE; then echo "Creating $ORGNAME organization repository $REPONAME ..."; fi
+    echo "Creating $ORGNAME organization repository $REPONAME ..."
     status_code=$(curl -w '%{http_code}' -s -o /dev/null -u "$USERNAME:$APITOKEN" https://api.github.com/orgs/$ORGNAME/repos -d '{"name":"'$REPONAME'"}')
         if [ $status_code -ne 201 ]; then if $VERBOSE; then echo "`basename $0`: curl could not create $ORGNAME organization repository $REPONAME"; fi; return 5; fi
     return 0
@@ -63,8 +63,8 @@ set_organization_role() {
 }
 
 add_branch_protection() {
-    if $VERBOSE; then echo "Adding branch protection to repository $REPONAME ..."; fi
-    status_code=$(curl -w '%{http_code}' -s -o /dev/null -X PUT -H "Authorization: token $APITOKEN" https://$HOSTAPI/repos/$ORGNAME/$REPONAME/branches/master/protection \
+    echo "Adding branch protection to repository $REPONAME ..."
+    status_code=$(curl -w '%{http_code}' -s -o /dev/null -X PUT -H "Authorization: token $APITOKEN" https://$HOSTAPI/repos/$ORGNAME/$REPONAME/branches/main/protection \
     -d '{"required_status_checks":{"strict":true, "contexts": []},"enforce_admins":true,"required_pull_request_reviews":{"require_code_owner_reviews":true,"required_approving_review_count":1},"restrictions":null,"required_linear_history":true,"required_conversation_resolution":true}' \
     )
     if [ $status_code -ne 200 ]; then if $VERBOSE; then echo "basename $status_code: status_code: $status_code Failed to update branch protection"; fi; return 5; fi
@@ -72,15 +72,15 @@ add_branch_protection() {
 }
 
 add_signature_protection() {
-    if $VERBOSE; then echo "Adding signature protection to repository $REPONAME ..."; fi
+    echo "Adding signature protection to repository $REPONAME ..."
     status_code=$(curl \
-    -w '%{http_code}' -s -o /dev/null -X POST -H "Authorization: token $APITOKEN" https://api.github.com/repos/$ORGNAME/$REPONAME/branches/master/protection/required_signatures)
+    -w '%{http_code}' -s -o /dev/null -X POST -H "Authorization: token $APITOKEN" https://api.github.com/repos/$ORGNAME/$REPONAME/branches/main/protection/required_signatures)
     if [ $status_code -ne 200 ]; then if $VERBOSE; then echo "basename $0: status_code: $status_code Failed to add signature protection"; fi; return 5; fi
     return 0
 }
 
 create_team() {
-    if $VERBOSE; then echo "Creating $1 team to $ORGNAME organization ..."; fi
+    echo "Creating $1 team to $ORGNAME organization ..."
     case $1 in
         "${REPONAME}_ADMIN" | "ADMIN")
             name=$1
@@ -95,7 +95,7 @@ create_team() {
             privacy='closed'
         ;;
     esac
-    status_code=$(curl -w '%{http_code}' -s -o /dev/null -X POST -H "Authorization: token $APITOKEN" https://api.github.com/orgs/$ORGNAME/teams \
+    status_code=$(curl -w '%{http_code}' -s -o /dev/null -H "Authorization: token $APITOKEN" https://api.github.com/orgs/$ORGNAME/teams \
     -d '{"name":"'"$name"'","description":"'"$description"'","permission":"'"$permission"'","privacy":"'"$privacy"'","repo_names": ["'"${ORGNAME}/${REPONAME}"'"]}')
     if [ $status_code -ne 201 ]; then if $VERBOSE; then echo "basename $0: status_code: $status_code Failed to create $1 team"; fi; return 5; fi
     return 0
@@ -116,7 +116,15 @@ check_team() {
     return 0
 }
 
+create_file() {
+    status_code=$(curl -w '%{http_code}' -s -o /dev/null -X PUT -H "Authorization: token $APITOKEN" https://api.github.com/repos/$ORGNAME/$REPONAME/contents/README.md \
+  -d '{"message":"genesis commit","content":"VGhpcyBpcyBhIFZDUg=="}')
+    if [ $status_code -ne 201 ]; then if $VERBOSE; then echo "status_code: $status_code $1 team not found"; fi; return 5; fi
+    return 0
+}
+
 read_file() {
+    echo "Reading $1 from $ORGNAME orgnaization and $REPONAME repository"
     curl -H "Authorization: token $APITOKEN" https://raw.githubusercontent.com/$ORGNAME/$REPONAME/master/"$1.json"
     # echo $(curl -H "Authorization: token $APITOKEN" https://api.github.com/repos/$ORGNAME/$REPONAME/contents/"$1.json") | jq -r '.content' | base64 --decode 
       if [ $? -ne 0 ]; then echo "`basename $0`: curl could not perform GET"; return 5; fi
@@ -172,6 +180,9 @@ case $1 in
     ;;
     "add-signature-protection")
         add_signature_protection
+    ;;
+    "create-file")
+        create_file
     ;;
     "read-file")
         read_file $2
