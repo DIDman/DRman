@@ -17,3 +17,4 @@ mongo.json
 out/
 target/
 tmp
+.vscode
