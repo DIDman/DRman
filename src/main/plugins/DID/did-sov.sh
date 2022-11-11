@@ -39,7 +39,7 @@ parse_did() {
 }
 
 resolve_did() {
-    $DRMAN_DIR/helper/api-github-vcr.sh read-file "$USERID/$ID"
+  $DRMAN_PLUGINS_DIR/githubVCR/api-github-vcr.sh read-file "$USERID/$ID"
 }
 
 operation
