@@ -35,41 +35,41 @@ done
 create_repository() {
 
 # check organization
-$DRMAN_DIR/helper/api-github-vcr.sh find-organization
+$DRMAN_PLUGINS_DIR/githubVCR/api-github-vcr.sh find-organization
 if [ $? -ne 0 ]; then exit $?; fi
   
 # check if user is a member of the organization
-$DRMAN_DIR/helper/api-github-vcr.sh check-organization-membership
+$DRMAN_PLUGINS_DIR/githubVCR/api-github-vcr.sh check-organization-membership
 if [ $? -ne 0 ]; then exit $?; fi
 
 # create a gitub repository
-$DRMAN_DIR/helper/api-github-vcr.sh create-repository
+$DRMAN_PLUGINS_DIR/githubVCR/api-github-vcr.sh create-repository
 if [ $? -ne 0 ]; then exit $?; fi
 
 # create admin team if it doesn't exists``
-$DRMAN_DIR/helper/api-github-vcr.sh check-team "${DRM_REPONAME}_ADMIN"
+$DRMAN_PLUGINS_DIR/githubVCR/api-github-vcr.sh check-team "${DRM_REPONAME}_ADMIN"
   if [ $? -ne 0 ]; then
-  $DRMAN_DIR/helper/api-github-vcr.sh create-team "${DRM_REPONAME}_ADMIN"
+  $DRMAN_PLUGINS_DIR/githubVCR/api-github-vcr.sh create-team "${DRM_REPONAME}_ADMIN"
       if [ $? -ne 0 ]; then exit $?; fi
   fi
 
 # create member team if it doesn't exists
-$DRMAN_DIR/helper/api-github-vcr.sh check-team "${DRM_REPONAME}_MEMBER"
+$DRMAN_PLUGINS_DIR/githubVCR/api-github-vcr.sh check-team "${DRM_REPONAME}_MEMBER"
   if [ $? -ne 0 ]; then
-  $DRMAN_DIR/helper/api-github-vcr.sh create-team "${DRM_REPONAME}_MEMBER"
+  $DRMAN_PLUGINS_DIR/githubVCR/api-github-vcr.sh create-team "${DRM_REPONAME}_MEMBER"
       if [ $? -ne 0 ]; then exit $?; fi
   fi
 
 # create genesis file
-$DRMAN_DIR/helper/api-github-vcr.sh create-file
+$DRMAN_PLUGINS_DIR/githubVCR/api-github-vcr.sh create-file
 if [ $? -ne 0 ]; then exit $?; fi
 
 # add branch protection
-$DRMAN_DIR/helper/api-github-vcr.sh add-branch-protection
+$DRMAN_PLUGINS_DIR/githubVCR/api-github-vcr.sh add-branch-protection
 if [ $? -ne 0 ]; then exit $?; fi
 
 # add signature protection
-$DRMAN_DIR/helper/api-github-vcr.sh add-signature-protection
+$DRMAN_PLUGINS_DIR/githubVCR/api-github-vcr.sh add-signature-protection
 if [ $? -ne 0 ]; then exit $?; fi
 
 echo "Created $DRM_REPONAME vcr successfully"

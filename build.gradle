@@ -11,6 +11,7 @@ String userHome = System.getProperty('user.home')
 ext.installBinDir = "${userHome}/.drman/bin"
 ext.installSrcDir = "${userHome}/.drman/src"
 ext.installHelperDir = "${userHome}/.drman/helper"
+ext.installPluginsDir = "${userHome}/.drman/plugins"
 
 def loadConfiguration() {
 	def environment = hasProperty('env') ? env : 'local'
@@ -69,6 +70,12 @@ task prepareHelperScripts(type: Copy) {
 	include('*.sh')
 }
 
+task preparePluginScripts(type: Copy) {
+	from('src/main/plugins')
+	into('build/plugins')
+	include('**/*')
+}
+
 tasks.test.configure {
 	dependsOn(prepareScripts)
 	testLogging.exceptionFormat = FULL
@@ -97,6 +104,10 @@ task cleanInstallHelpers(type: Delete) {
 	delete(installHelperDir)
 }
 
+task cleanInstallPlugins(type: Delete) {
+	delete(installPluginsDir)
+}
+
 task installInit(type: Copy, dependsOn: [cleanInstallInit, prepareScripts]) {
 	from('build/scripts')
 	into(installBinDir)
@@ -116,7 +127,13 @@ task installHelperScripts(type: Copy, dependsOn: [cleanInstallHelpers, prepareHe
 	include('*.sh')
 }
 
-task install(dependsOn: [installInit, installModules, installHelperScripts])
+task installPluginScripts(type: Copy, dependsOn: [cleanInstallPlugins, preparePluginScripts]) {
+	from('build/plugins')
+	into(installPluginsDir)
+	include('**/*')
+}
+
+task install(dependsOn: [installInit, installModules, installHelperScripts, installPluginScripts])
 
 bintray {
 	user = System.getenv('BINTRAY_USERNAME')

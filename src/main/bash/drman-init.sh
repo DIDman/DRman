@@ -42,6 +42,10 @@ if [ -z "$DRMAN_DIR" ]; then
 	export DRMAN_DIR="$HOME/.drman"
 fi
 
+if [ -z "$DRMAN_PLUGINS_DIR" ]; then
+	export DRMAN_PLUGINS_DIR="$DRMAN_DIR/plugins"
+fi
+
 # infer platform
 DRMAN_PLATFORM="$(uname)"
 if [[ "$DRMAN_PLATFORM" == 'Linux' ]]; then

@@ -1,20 +1,20 @@
 # main menu
 
 function __drm_githubVCR() {
-    $DRMAN_DIR/helper/api-github-vcr.sh get-github-credentials
+    $DRMAN_PLUGINS_DIR/githubVCR/api-github-vcr.sh get-github-credentials
     PS3='Please choose an operation: '
     options=("Organization" "VCR" "Teams" "DID" "Quit")
     select opt in "${options[@]}"
     do
         case $opt in
             "Organization")
-                $DRMAN_DIR/helper/org-github-vcr.sh
+                $DRMAN_PLUGINS_DIR/githubVCR/org-github-vcr.sh
             ;;
             "VCR")
-                $DRMAN_DIR/helper/repo-github-vcr.sh               
+                $DRMAN_PLUGINS_DIR/githubVCR/repo-github-vcr.sh               
             ;;
             "Teams")
-                bash $DRMAN_DIR/helper/team-github-vcr.sh
+                bash $DRMAN_PLUGINS_DIR/githubVCR/team-github-vcr.sh
             ;;
             "Quit")
                 exit 0

@@ -1,5 +1,7 @@
 #!/bin/bash
-# github-did-management
+# sovrin-did-management
+
+WALLET_PATH=$DRMAN_DIR/wallet
 
 function operation() { 
 PS3='Please choose an operation: '
