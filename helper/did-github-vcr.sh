@@ -25,15 +25,15 @@ done
 # methods
 parse_did() {
     readarray -d : -t didarr <<< $DID
-    ORGNAME=${didarr[2]}
-    REPONAME=${didarr[3]}
+    DRM_ORGNAME=${didarr[2]}
+    DRM_REPONAME=${didarr[3]}
     USERID=${didarr[4]}
     ID=${didarr[5]}
-    export VERBOSE
-    export ORGNAME
-    export REPONAME
-    export USERID
-    export ID
+    export DRM_VERBOSE
+    export DRM_ORGNAME
+    export DRM_REPONAME
+    # export USERID
+    # export ID
 }
 
 resolve_did() {

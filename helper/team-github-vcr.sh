@@ -9,42 +9,59 @@ do
   case $opt in
     "Create Team")
       # get team name
+      read -p "Organization Name: " DRM_ORGNAME
+      export DRM_ORGNAME
       read -p "Team Name: " TEAMNAME
       create_team
     ;;
     "List Teams")
+      read -p "Organization Name: " DRM_ORGNAME
+      export DRM_ORGNAME
       $DRMAN_DIR/helper/api-github-vcr.sh list-teams
     ;;
     "Get Team")
+      read -p "Organization Name: " DRM_ORGNAME
+      export DRM_ORGNAME
       read -p "Team Name: " TEAMNAME
       $DRMAN_DIR/helper/api-github-vcr.sh list-teams $TEAMNAME
     ;;
     "Add Repository")
+      read -p "Organization Name: " DRM_ORGNAME
+      export DRM_ORGNAME
       read -p "Team Name: " TEAMNAME
       read -p "Repo Name: " REPONAME
       $DRMAN_DIR/helper/api-github-vcr.sh add-team-repository $TEAMNAME $REPONAME
     ;;
     "Get Repositories")
+      read -p "Organization Name: " DRM_ORGNAME
+      export DRM_ORGNAME
       read -p "Team Name: " TEAMNAME
-      read -p "Repo Name: " REPONAME 
-      $DRMAN_DIR/helper/api-github-vcr.sh get-team-repository $TEAMNAME $REPONAME
+      $DRMAN_DIR/helper/api-github-vcr.sh list-team-repository $TEAMNAME
     ;;
     "Remove Repository")
+      read -p "Organization Name: " DRM_ORGNAME
+      export DRM_ORGNAME
       read -p "Team Name: " TEAMNAME
       read -p "Repo Name: " REPONAME 
       $DRMAN_DIR/helper/api-github-vcr.sh remove-team-repository $TEAMNAME $REPONAME
     ;;
     "Add member")
+      read -p "Organization Name: " DRM_ORGNAME
+      export DRM_ORGNAME
       read -p "Team Name: " TEAMNAME
       read -p "User Name: " USERNAME
       read -p "Role: " ROLE
       $DRMAN_DIR/helper/api-github-vcr.sh add-team-member $TEAMNAME $REPONAME $ROLE  
     ;;
     "List members")
+      read -p "Organization Name: " DRM_ORGNAME
+      export DRM_ORGNAME  
       read -p "Team Name: " TEAMNAME
       $DRMAN_DIR/helper/api-github-vcr.sh add-team-member $TEAMNAME $REPONAME   
     ;;
     "Remove member")
+      read -p "Organization Name: " DRM_ORGNAME
+      export DRM_ORGNAME    
       read -p "Team Name: " TEAMNAME
       read -p "User Name: " USERNAME
       $DRMAN_DIR/helper/api-github-vcr.sh remove-team-member $TEAMNAME $REPONAME

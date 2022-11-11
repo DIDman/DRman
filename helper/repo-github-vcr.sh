@@ -8,19 +8,19 @@ select opt in "${options[@]}"
 do
     case $opt in
       "Create")
-        read -p "Organization Name: " ORGNAME
-        read -p "VCR Name: " REPONAME
-        export ORGNAME
-        export REPONAME
+        read -p "Organization Name: " DRM_ORGNAME
+        read -p "VCR Name: " DRM_REPONAME
+        export DRM_ORGNAME
+        export DRM_REPONAME
         create_repository
       ;;
       "Invite")
-        read -p "Organization Name: " ORGNAME
+        read -p "Organization Name: " DRM_ORGNAME
         read -p "Username of invitee: " USERID
         read -p "Role of invitee: " ROLE
-        read -p "VCR Name: " REPONAME
-        export ORGNAME        
-        export REPONAME
+        read -p "VCR Name: " DRM_REPONAME
+        export DRM_ORGNAME        
+        export DRM_REPONAME
         invite_to_repository
       ;;
       "Quit")
@@ -33,6 +33,10 @@ done
 }
 
 create_repository() {
+
+# get github credentials
+$DRMAN_DIR/helper/api-github-vcr.sh get-github-credentials
+if [ $? -ne 0 ]; then exit $?; fi
 
 # check organization
 $DRMAN_DIR/helper/api-github-vcr.sh find-organization
@@ -47,16 +51,16 @@ $DRMAN_DIR/helper/api-github-vcr.sh create-repository
 if [ $? -ne 0 ]; then exit $?; fi
 
 # create admin team if it doesn't exists``
-$DRMAN_DIR/helper/api-github-vcr.sh check-team "${REPONAME}_ADMIN"
+$DRMAN_DIR/helper/api-github-vcr.sh check-team "${DRM_REPONAME}_ADMIN"
   if [ $? -ne 0 ]; then
-  $DRMAN_DIR/helper/api-github-vcr.sh create-team "${REPONAME}_ADMIN"
+  $DRMAN_DIR/helper/api-github-vcr.sh create-team "${DRM_REPONAME}_ADMIN"
       if [ $? -ne 0 ]; then exit $?; fi
   fi
 
 # create member team if it doesn't exists
-$DRMAN_DIR/helper/api-github-vcr.sh check-team "${REPONAME}_MEMBER"
+$DRMAN_DIR/helper/api-github-vcr.sh check-team "${DRM_REPONAME}_MEMBER"
   if [ $? -ne 0 ]; then
-  $DRMAN_DIR/helper/api-github-vcr.sh create-team "${REPONAME}_MEMBER"
+  $DRMAN_DIR/helper/api-github-vcr.sh create-team "${DRM_REPONAME}_MEMBER"
       if [ $? -ne 0 ]; then exit $?; fi
   fi
 
@@ -72,7 +76,7 @@ if [ $? -ne 0 ]; then exit $?; fi
 $DRMAN_DIR/helper/api-github-vcr.sh add-signature-protection
 if [ $? -ne 0 ]; then exit $?; fi
 
-echo "Created $REPONAME vcr successfully"
+echo "Created $DRM_REPONAME vcr successfully"
 
 }
 

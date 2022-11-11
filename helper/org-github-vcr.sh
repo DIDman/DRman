@@ -9,15 +9,15 @@ do
     case $opt in
       "Create")
         # get organization name
-        read -p "Organization Name: " ORGNAME
-        export ORGNAME
+        read -p "Organization Name: " DRM_ORGNAME
+        export DRM_ORGNAME
         create_organization
       ;;
       "Invite")
-        read -p "Organization Name: " ORGNAME
+        read -p "Organization Name: " DRM_ORGNAME
         read -p "Username of invitee: " USERID
         read -p "Role of invitee: " ROLE
-        export ORGNAME
+        export DRM_ORGNAME
         invite_to_organization
       ;;
       "Quit")
@@ -34,9 +34,9 @@ create_organization() {
     $DRMAN_DIR/helper/api-github-vcr.sh find-organization
     if [ $? -ne 0 ]; then
         $DRMAN_DIR/helper/api-github-vcr.sh create-organization
-        echo "Organization $ORGNAME created successfully"
+        echo "Organization $DRM_ORGNAME created successfully"
         if [ $? -ne 0 ]; then exit $?; fi
-    else echo "Organization $ORGNAME already exists"
+    else echo "Organization $DRM_ORGNAME already exists"
     fi
 }
 
