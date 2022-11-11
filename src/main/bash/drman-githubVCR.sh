@@ -1,7 +1,7 @@
 # main menu
 
 function __drm_githubVCR() {
-    $DRMAN_DIR/helper/api-github-vcr.sh get_github_credentials
+    $DRMAN_DIR/helper/api-github-vcr.sh get-github-credentials
     PS3='Please choose an operation: '
     options=("Organization" "VCR" "Teams" "DID" "Quit")
     select opt in "${options[@]}"
@@ -12,9 +12,6 @@ function __drm_githubVCR() {
             ;;
             "VCR")
                 $DRMAN_DIR/helper/repo-github-vcr.sh               
-            ;;
-            "DID")
-                $DRMAN_DIR/helper/did-github-vcr.sh  
             ;;
             "Teams")
                 bash $DRMAN_DIR/helper/team-github-vcr.sh

@@ -34,10 +34,6 @@ done
 
 create_repository() {
 
-# get github credentials
-$DRMAN_DIR/helper/api-github-vcr.sh get-github-credentials
-if [ $? -ne 0 ]; then exit $?; fi
-
 # check organization
 $DRMAN_DIR/helper/api-github-vcr.sh find-organization
 if [ $? -ne 0 ]; then exit $?; fi
