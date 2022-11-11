@@ -116,6 +116,50 @@ check_team() {
     return 0
 }
 
+add_team_repository() {
+    case $1 in
+    "${REPONAME}_ADMIN" | "ADMIN")
+        permission='push'
+    ;;
+    "${REPONAME}_MEMBER" | "MEMBER")
+        permission='pull'
+    ;;
+    esac
+    status_code=$(curl -w '%{http_code}' -X PUT -s -o /dev/null -H "Authorization: token $APITOKEN" https://api.github.com/orgs/$ORGNAME/teams/$1/repos/$USERNAME/$2 -d '{"permission":"'"$permission"'"}' )
+    if [ $status_code -ne 204 ]; then if $VERBOSE; then echo "status_code: $status_code $1 team not found"; fi; return 5; fi
+    return 0
+}
+
+remove_team_repository() {
+    status_code=$(curl -w '%{http_code}' -X DELETE -s -o /dev/null -H "Authorization: token $APITOKEN" https://api.github.com/orgs/$ORGNAME/teams/$1/repos/$USERNAME/$2)
+    if [ $status_code -ne 204 ]; then if $VERBOSE; then echo "status_code: $status_code $1 team not found"; fi; return 5; fi
+    return 0
+}
+
+list_team_repository() {
+    status_code=$(curl -w '%{http_code}' -X PUT -s -o /dev/null -H "Authorization: token $APITOKEN" https://api.github.com/orgs/$ORGNAME/teams/$1/repos )
+    if [ $status_code -ne 200 ]; then if $VERBOSE; then echo "status_code: $status_code $1 team not found"; fi; return 5; fi
+    return 0
+}
+
+add_team_member() {
+    status_code=$(curl -w '%{http_code}' -s -o /dev/null -H "Authorization: token $APITOKEN"  https://api.github.com/orgs/$ORGNAME/teams/$1/memberships/$2 -d '{"role": "'"$3"'"}')
+    if [ $status_code -ne 200 ]; then if $VERBOSE; then echo "status_code: $status_code $1 team not found"; fi; return 5; fi
+    return 0
+}
+
+list_team_member() {
+    status_code=$(curl -w '%{http_code}' -s -o /dev/null -H "Authorization: token $APITOKEN"  https://api.github.com/orgs/$ORGNAME/teams/$1/members -d '{"role": "'"$3"'"}')
+    if [ $status_code -ne 200 ]; then if $VERBOSE; then echo "status_code: $status_code $1 team not found"; fi; return 5; fi
+    return 0    
+}
+
+remove_team_member() {
+    status_code=$(curl -w '%{http_code}' -X DELETE -s -o /dev/null -H "Authorization: token $APITOKEN"  https://api.github.com/orgs/$ORGNAME/teams/$1/memberships/$2)
+    if [ $status_code -ne 204 ]; then if $VERBOSE; then echo "status_code: $status_code $1 team not found"; fi; return 5; fi
+    return 0
+}
+
 create_file() {
     status_code=$(curl -w '%{http_code}' -s -o /dev/null -X PUT -H "Authorization: token $APITOKEN" https://api.github.com/repos/$ORGNAME/$REPONAME/contents/README.md \
   -d '{"message":"genesis commit","content":"VGhpcyBpcyBhIFZDUg=="}')
@@ -154,7 +198,19 @@ case $1 in
         create_team $2
     ;;
     "add-team-repository")
-        add_team_repository $2
+        add_team_repository $2 $3
+    ;;
+    "remove-team-repository")
+        remove_team_repository $2 $3
+    ;;
+    "add-team-member")
+        add_team_member $2 $3 $4 
+    ;;
+    "list-team-member")
+        list_team_member $2
+    ;;
+    "remove-team-member")
+        remove_team_member $2 $3 $4 
     ;;
     "list-teams")
         list_teams $2

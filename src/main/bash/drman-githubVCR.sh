@@ -3,7 +3,7 @@
 function __drm_githubVCR() {
     $DRMAN_DIR/helper/api-github-vcr.sh get_github_credentials
     PS3='Please choose an operation: '
-    options=("Organization" "VCR" "DID" "Quit")
+    options=("Organization" "VCR" "Teams" "DID" "Quit")
     select opt in "${options[@]}"
     do
         case $opt in
@@ -15,6 +15,9 @@ function __drm_githubVCR() {
             ;;
             "DID")
                 $DRMAN_DIR/helper/did-github-vcr.sh  
+            ;;
+            "Teams")
+                bash $DRMAN_DIR/helper/team-github-vcr.sh
             ;;
             "Quit")
                 exit 0
