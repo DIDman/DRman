@@ -61,6 +61,9 @@ function drm() {
 	vcr)
 		COMMAND="vcr"
 		;;
+	did)
+		COMMAND="did"
+	;;
 	esac
 
 	if [[ "$COMMAND" == "home" ]]; then

@@ -11,6 +11,7 @@ String userHome = System.getProperty('user.home')
 ext.installBinDir = "${userHome}/.drman/bin"
 ext.installSrcDir = "${userHome}/.drman/src"
 ext.installHelperDir = "${userHome}/.drman/helper"
+ext.installPluginsDir = "${userHome}/.drman/plugins"
 
 def loadConfiguration() {
 	def environment = hasProperty('env') ? env : 'local'
@@ -64,10 +65,16 @@ task prepareScripts(type: Copy) {
 }
 
 task prepareHelperScripts(type: Copy) {
- 	from('helper')
- 	into('build/helper')
- 	include('*.sh')
- }
+	from('helper')
+	into('build/helper')
+	include('*.sh')
+}
+
+task preparePluginScripts(type: Copy) {
+	from('src/main/plugins')
+	into('build/plugins')
+	include('**/*')
+}
 
 tasks.test.configure {
 	dependsOn(prepareScripts)
@@ -94,7 +101,11 @@ task cleanInstallModules(type: Delete) {
 }
 
 task cleanInstallHelpers(type: Delete) {
- 	delete(installHelperDir)
+	delete(installHelperDir)
+}
+
+task cleanInstallPlugins(type: Delete) {
+	delete(installPluginsDir)
 }
 
 task installInit(type: Copy, dependsOn: [cleanInstallInit, prepareScripts]) {
@@ -111,12 +122,18 @@ task installModules(type: Copy, dependsOn: [cleanInstallModules, prepareScripts]
 }
 
 task installHelperScripts(type: Copy, dependsOn: [cleanInstallHelpers, prepareHelperScripts]) {
- 	from('build/helper')
- 	into(installHelperDir)
- 	include('*.sh')
- }
+	from('build/helper')
+	into(installHelperDir)
+	include('*.sh')
+}
 
-task install(dependsOn: [installInit, installModules, installHelperScripts])
+task installPluginScripts(type: Copy, dependsOn: [cleanInstallPlugins, preparePluginScripts]) {
+	from('build/plugins')
+	into(installPluginsDir)
+	include('**/*')
+}
+
+task install(dependsOn: [installInit, installModules, installHelperScripts, installPluginScripts])
 
 bintray {
 	user = System.getenv('BINTRAY_USERNAME')
