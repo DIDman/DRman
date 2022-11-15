@@ -6,13 +6,11 @@ function __drm_vcr() {
         case $opt in
             "Github")
                 export VCR='github'
-                source ~/.drman/src/drman-git.sh
-                __drm_gitVCR
+                $DRMAN_PLUGINS_DIR/VCR/drman-git.sh
                 ;;
             "Gitlab")
                 export VCR='gitlab'
-                source ~/.drman/src/drman-git.sh
-                __drm_gitVCR
+                $DRMAN_PLUGINS_DIR/VCR/drman-git.sh
                 ;;
             "Quit")
                 echo "We are done!"

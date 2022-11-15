@@ -55,9 +55,6 @@ function drm() {
 	h)
 		COMMAND="home"
 		;;
-	gvcr)
-		COMMAND="githubVCR"
-		;;
 	vcr)
 		COMMAND="vcr"
 		;;
