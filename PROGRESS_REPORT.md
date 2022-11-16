@@ -8,7 +8,7 @@
 - [x] Check some paper and project which using Git as distributed storage solution 
   - [x] RepoBee: Developing Tool Support for Courses using Git/GitHub, https://dl.acm.org/doi/10.1145/3304221.3319784
   - [x] Trusty URIs: Verifiable, Immutable, and Permanent Digital Artifacts for Linked Data, https://link.springer.com/content/pdf/10.1007/978-3-319-07443-6_27.pdf
-  - [x] Reliable e-Assessment with GIT ¨C Practical 
+  - [x] Reliable e-Assessment with GIT ï¿½C Practical 
 Considerations and Implementation, https://www.eunis.org/eunis2017/wp-content/uploads/sites/10/2017/06/EUNIS_2017_paper_22.pdf
 
 
@@ -59,8 +59,8 @@ Considerations and Implementation, https://www.eunis.org/eunis2017/wp-content/up
   - [x] Checked Verifiable Credentials Implementation Guidelines 1.0 (https://www.w3.org/TR/vc-imp-guide/)
 
 - [x] Explore DRM commands
-  - [x] Checked helper/create-github-vcr.sh
-  - [x] Checked helper/delete-github-vcr.sh
+  - [x] Checked create-github-vcr.sh
+  - [x] Checked delete-github-vcr.sh
 
 - [x] Explore DID repository
 

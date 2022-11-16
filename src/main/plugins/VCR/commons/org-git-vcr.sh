@@ -31,9 +31,9 @@ done
 
 create_organization() {
     # create an organization if it doesn't exists
-    $DRMAN_PLUGINS_DIR/githubVCR/api-github-vcr.sh find-organization
+    $DRMAN_PLUGINS_DIR/VCR/$VCR/api-$VCR-vcr.sh find-organization
     if [ $? -ne 0 ]; then
-        $DRMAN_PLUGINS_DIR/githubVCR/api-github-vcr.sh create-organization
+        $DRMAN_PLUGINS_DIR/VCR/$VCR/api-$VCR-vcr.sh create-organization
         echo "Organization $DRM_ORGNAME created successfully"
         if [ $? -ne 0 ]; then exit $?; fi
     else echo "Organization $DRM_ORGNAME already exists"
@@ -41,7 +41,7 @@ create_organization() {
 }
 
 invite_to_organization() {
-    $DRMAN_PLUGINS_DIR/githubVCR/api-github-vcr.sh invite-to-organization $USERID $ROLE
+    $DRMAN_PLUGINS_DIR/VCR/$VCR/api-$VCR-vcr.sh invite-to-organization $USERID $ROLE
 }
 
 operation
